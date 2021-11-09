@@ -1,0 +1,310 @@
+
+
+-----------create table file--------------------
+
+CREATE TABLE Employee(
+        EmpID           VARCHAR(8) not null,
+        FName           Varchar(15),
+        LName           Varchar(15),
+        Pronoun         Varchar(15),
+        Gender          Varchar(8),
+        PhoneNo         Varchar(12) not null,
+        Email           Varchar(30) not null,
+        Street_Address  Varchar(30),  
+        City            Varchar(10),
+        Province        varchar(15),
+        PostalCode      varchar(7),
+        Marital_Status  varchar(10),
+        PositionTitle     varchar(30) default null,
+        DeptID          varchar(8) default null,
+        StartDate       date,
+        Empusername     varchar(20) ,
+        Emppassword     varchar(20),
+        Primary Key (EmpID)
+);
+
+Create Table Department(
+        DeptID          Varchar(8) not null,
+        Name            varchar(15),
+        DeptManager     varchar(8),
+        Primary Key (DeptID)
+);
+
+Create Table Salary(
+        PositionTitle   varchar(30),
+        Amount          float(10),
+        Bonus           float(10),
+        Primary Key (PositionTitle)
+);
+
+Create  Table Leave(
+        LeaveID        varchar(8) not null,
+        EmpID          varchar(8),
+        DateLeave      date,
+        Primary Key (LeaveID)
+);
+
+Create Table Payroll(
+        TransactionID       varchar(8) not null,
+        EmpID               varchar(8) ,
+        DatePayed           date,
+        Amount              float(10),
+        Gross               float(10),
+        Bank                varchar(15),
+        AccountNumber       number(12),
+        P_Manager           varchar(8),
+        Report              varchar(200),
+        Primary Key (TransactionID)
+);
+
+
+-----------alter table file--------------------
+
+alter table Employee
+add foreign key (DeptID) References Department(DeptID);
+
+alter table Employee
+add foreign key (PositionTitle) References Salary(PositionTitle);
+
+alter table Leave
+add Foreign Key (EmpID) References Employee(EmpID);
+
+alter table Payroll
+add Foreign Key (EmpID) References Employee(EmpID);
+
+exit;
+EOF;
+
+-----------populate tables file--------------------
+
+insert into employee (empid , fname , lname , pronoun,
+                gender, phoneno, email, street_address, city, province, postalcode,
+                marital_status, positiontitle, deptid, empusername, emppassword)
+       values ('78945655', 'Hunk', 'Logan', 'he/him',
+                'M', '905-456-4561', 'aaronhunk@xyz.com', '25 Dinasour Street', 'Toronto', 'ON', 'A7P 6E2',
+                'Single', 'Assitant HR', '78945612', 'hunk.pp', 'Snake@12');
+insert into employee (empid , fname , lname , pronoun,
+                gender, phoneno, email, street_address, city, province, postalcode,
+                marital_status, positiontitle, deptid, empusername, emppassword)
+       values ('78945656', 'Peter', 'Jhonson', 'he/him',
+                'M', '905-456-4455', 'petjhon@xyz.com', '14 Lisa Street', 'Brampton', 'ON', 'P3R 7B7',
+                'Married', 'Business Manager', '78945613', 'pettj.1', 'Snake@12');
+insert into employee (empid , fname , lname , pronoun,
+                gender, phoneno, email, street_address, city, province, postalcode,
+                marital_status, positiontitle, deptid, empusername, emppassword)
+       values ('78945657', 'Jane', 'Ace', 'she/her',
+                'F', '416-454-7856', 'ace2jane@abc.com', '31 Pink Streey', 'Oakville', 'ON', 'L3B 7N5',
+                'Single', 'Training Lead', '78945614', 'jace3n', 'Snake@12');
+insert into employee (empid , fname , lname , pronoun,
+                gender, phoneno, email, street_address, city, province, postalcode,
+                marital_status, positiontitle, deptid, empusername, emppassword)
+       values ('78945658', 'Emma', 'Oaks', 'she/her',
+                'F', '416-789-1268', 'oaksemma@xyz.com', '47 Herrsion Road', 'Palace', 'ON', 'R3U 8H3',
+                'Divorced', 'Analyst', '78945611', 'eoa3ks', 'Snake@12');
+insert into employee (empid , fname , lname , pronoun,
+                gender, phoneno, email, street_address, city, province, postalcode,
+                marital_status, positiontitle,deptid, empusername, emppassword)
+       values ('78945659', 'harry', 'potter', 'he/him',
+                'M', '416-456-4821', 'potterharry@hogs.com', '34 James Street', 'London', 'ON', 'H7G 3H8', 
+                'Single', 'Analyst','78945611', 'potterh3ry', 'Snake@12');
+insert into employee (empid , fname , lname , pronoun,
+                gender, phoneno, email, street_address, city, province, postalcode,
+                marital_status, empusername, emppassword)
+       values ('78945660', 'Big', 'Head', 'he/him',
+                'M', '905-456-4123', 'bighead@abc.com', '15 random street', 'Brampton', 'ON', 'P3R 7W6',
+                'Married', 'BIGHEAD', 'Snake@12');
+
+
+insert into department (deptid, name, deptmanager)
+        values ('78945611', 'IT',Null);
+insert into department (deptid, name, deptmanager)
+        values ('78945612', 'Hiring',null);
+insert into department (deptid, name, deptmanager)
+        values ('78945613', 'Managment','78945656');
+insert into department (deptid, name, deptmanager)
+        values ('78945614', 'Training',null);
+
+
+insert into leave (leaveid, empid, dateleave)
+        values ('78945689', '78945655',to_date('2021-10-15','yyyy-mm-dd'));
+insert into leave (leaveid, empid, dateleave)
+        values ('78945690', '78945657',to_date('2021-10-14','yyyy-mm-dd'));
+insert into leave (leaveid, empid, dateleave)
+        values ('78945698', '78945659',to_date('2021-10-14','yyyy-mm-dd'));
+insert into leave (leaveid, empid, dateleave)
+        values ('78945692', '78945657',to_date('2021-10-12','yyyy-mm-dd'));
+insert into leave (leaveid, empid, dateleave)
+        values ('78945693', '78945655',to_date('2021-10-11','yyyy-mm-dd'));
+insert into leave (leaveid, empid, dateleave)
+        values ('78945694', '78945656',to_date('2021-10-13','yyyy-mm-dd'));
+insert into leave (leaveid, empid, dateleave)
+        values ('78945695', '78945655',to_date('2021-10-14','yyyy-mm-dd'));
+
+insert into salary (positiontitle,amount)
+        values ('Assitant HR', 223454);
+insert into salary (positiontitle, amount)
+        values ('Training Lead', 213454);
+insert into salary (positiontitle, amount)
+        values ('Analyst', 442457);
+insert into salary (positiontitle, amount)
+        values ('Business Manager',787641);
+
+insert into payroll (transactionid, empid, datepayed, bank, accountnumber, report)
+        values ('45454511', '78945655',to_date('2021-10-19', 'yyyy-mm-dd'), 'Scotiabank', '123456789111', 'This is test data 1.');
+insert into payroll (transactionid, empid, datepayed, bank, accountnumber, report)
+        values ('45454512', '78945657',to_date('2021-10-19', 'yyyy-mm-dd'), 'RBC', '123456789112', 'This is test data 2.');
+insert into payroll (transactionid, empid, datepayed, bank, accountnumber, report)
+        values ('45454513', '78945657',to_date('2021-10-15', 'yyyy-mm-dd'), 'RBC', '123456789123', 'This is test data 3.');
+insert into payroll (transactionid, empid, datepayed, bank, accountnumber, report)
+        values ('45454514', '78945659',to_date('2021-10-15', 'yyyy-mm-dd'), 'Amex', '123456789114', 'This is test data 4.');
+insert into payroll (transactionid, empid, datepayed, bank, accountnumber, report)
+        values ('45454515', '78945658',to_date('2021-10-17', 'yyyy-mm-dd'), 'Amex', '123456789115', 'This is test data 5.');
+
+
+-----------drop tables and views file--------------------
+
+DROP TABLE employee cascade constraints;
+drop table department cascade constraints;
+drop table salary cascade constraints;
+drop table leave cascade constraints;
+drop table payroll cascade constraints;
+
+
+drop view emp_on_leave_on_13oct cascade constraints;
+drop view emp_salary cascade constraints;
+drop view accnum_detail cascade constraints;
+drop view emp_on_leave_on_14oct cascade constraints;
+
+-----------queries file--------------------
+
+#/*------------------------------------------------------------------------------#-------------------------*/
+#/*                  Writing some simple queries                                 #*/
+
+ttitle left '---COMPLETE TABLE EMPLOYEE---'-
+skip left ''
+select * from employee;
+
+ttitle left '---COMPLETE TABLE DEPARTMENT---'-
+skip left ''
+select * from department;
+
+ttitle left '---COMPLETE TABLE LEAVE---'-
+skip left ''
+select * from leave;
+
+ttitle left '---COMPLETE TABLE SALARY---'-
+skip left ''
+select * from salary;
+
+ttitle left '---COMPLETE TABLE PAYROLL---'-
+skip left ''
+select * from payroll;
+
+
+#/*------------------------------------------------------------------------------#-------------------------*/
+#/*                  Writing some more simple queries                             #    */
+
+ttitle left '---Salaries greater than 400,000---'-
+skip left ''
+select positiontitle, amount from salary
+            where amount >= 400000
+            order by amount desc;
+
+ttitle left '---OREDRING THE NAMESS OF EMP IN DESCENDING ORDER---'-
+skip left ''
+select fname as FirstName,lname as LastName
+            from employee
+            order by fname desc;
+
+ttitle left '---LISTING SINGLE FEMALES IN THE DATABASE---'-
+skip left ''
+select * from employee   
+            where Gender = 'F'
+            and Marital_status = 'Single';
+
+ttitle left '---NUMBER OF EMPLOYEES WITH A BANK---'-
+skip left ''
+select count(transactionid) as EmpFromThisBank,
+            payroll.bank    
+            from payroll  
+            group by bank;
+
+
+ttitle left '---PAYROLLS GENERATED BEFORE 18 Oct, 2021---'-
+skip left '---AND SORT THEM BY DATE---'-
+skip left ''
+select transactionid as TranID, 
+        accountnumber as AccNumber,  
+            bank, datepayed from payroll   
+            where datepayed < to_date('2021-10-18','yyyy-mm-dd')
+            order by datepayed;
+ttitle left '---LISTING DEPARTMENT NAMES---'-
+skip left ''
+select name as DeptName from department        
+            order by department.name;      
+
+ttitle left '---NUMBER OF EMPLOYEES ON LEAVE ON CERTAIN DATE---'-
+skip left ''
+select count(leaveid) as peopleOnLeave, 
+            leave.dateleave     
+            from leave          
+            group by dateleave
+            order by dateleave;
+
+
+            
+#/*------------------------------------------------------------------------------#-------------------------*/
+#/*                  Writing some interesting advanced queries                            #    */ 
+
+ttitle left '---NUMBER OF EMPLOYEES ON A CERTAIN POSITION TITLE---'- 
+skip left ''
+select count(empid) as employeeCount,
+            positiontitle                  
+            from employee           
+            group by positiontitle;
+
+ttitle left '---department which dont have a manager---'-
+skip left ''
+(select * 
+from department)
+MINUS
+(select d.*
+from department d
+where deptmanager is not null
+);
+
+ttitle left '---Employees Without a manager---'-
+skip left ''
+(select e.empid, e.fname, e.lname
+from employee e, department d
+where e.deptid = d.deptid)
+MINUS
+(select e.empid, e.fname, e.lname
+from employee e, department d
+where   d.deptmanager is not null
+        and e.deptid = d.deptid);
+
+ttitle left '---employees on leave on 13 oct or 14 oct---'-
+skip left ''
+(select e.fname,e.lname,e.empid,l.dateleave      
+            from leave l, employee e
+            where l.dateleave = to_date('2021-10-13','yyyy-mm-dd')
+                and l.empid = e.empid)
+     UNION
+(select e.fname,e.lname,e.empid,l.dateleave      
+            from leave l, employee e
+            where l.dateleave = to_date('2021-10-14','yyyy-mm-dd')
+                and l.empid = e.empid
+);
+
+
+ttitle left '---employee with unassigned department and role---'-
+skip left ''               
+select e.empid, e.fname, e.lname
+    from employee e
+    where exists
+        (select * 
+        from employee e1
+        where e.deptid is null
+            and e.positiontitle is null
+    );          
